@@ -33,6 +33,33 @@ interface Vehicle {
     wingspan?: number; // optional for Plane properties
 }
 
+/*
+// If you use Class with interface
+class VehicleAccount {
+    model: string;
+    color: string;
+    year: number;
+    power: number;
+    constructor(model: string, color: string, year: number, power: number){
+        this.model= model;
+        this.color= color;
+        this.year= year;
+        this.power= power;
+      }
+}
+
+class Car extends VehicleAccount{
+    bodyType: string;
+    wheelCount: number;
+    constructor(model: string, color: string, year: number, power: number, bodyType: string, wheelCount: number){
+        super(model, color, year, power);
+        this.bodyType= bodyType;
+        this.wheelCount= wheelCount;
+      }
+}
+
+// Continue with class Boat, and class Plane
+*/
 // create vehicle list to store vehicle
 const vehicleList: any[] = []
 // Define a POST route for "/vehicle/add"

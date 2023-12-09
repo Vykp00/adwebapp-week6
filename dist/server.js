@@ -80,19 +80,16 @@ app.post('/vehicle/add', (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
-// Define GET route to search for vehicle models
 app.get('/vehicle/search/:model', (req, res) => {
     try {
         const modelName = req.params.model;
         // Find the vehicle in the vehicleList based on the model
         const foundVehicle = vehicleList.find((vehicle) => vehicle.model === modelName);
         if (foundVehicle) {
-            // If the vehicle is found, response with the vehicle data. 
-            // Use let to modify responseVehicle from conditions if else
+            // If the vehicle is found, respond with the vehicle data
             let responseVehicle;
-            // if foundVehicle has bodyType == Car
             if (foundVehicle.bodyType) {
-                // If it's a Car, exclude other property
+                // If it's a Car, exclude wingspan property
                 responseVehicle = {
                     model: foundVehicle.model,
                     color: foundVehicle.color,
@@ -103,7 +100,7 @@ app.get('/vehicle/search/:model', (req, res) => {
                 };
             }
             else if (foundVehicle.draft) {
-                // If it's a Boat
+                // If it's a Boat, exclude wheelCount property
                 responseVehicle = {
                     model: foundVehicle.model,
                     color: foundVehicle.color,
@@ -113,34 +110,34 @@ app.get('/vehicle/search/:model', (req, res) => {
                 };
             }
             else if (foundVehicle.wingspan) {
-                // If it's a Plane
+                // If it's a Plane, exclude wheelCount property
                 responseVehicle = {
                     model: foundVehicle.model,
                     color: foundVehicle.color,
                     year: foundVehicle.year,
                     power: foundVehicle.power,
-                    wingspan: foundVehicle.wingspan
+                    wingspan: foundVehicle.wingspan,
                 };
             }
             else {
-                // If itäs a Generic vehicle,
+                // If it's a generic vehicle, exclude both wingspan and wheelCount properties
                 responseVehicle = {
                     model: foundVehicle.model,
                     color: foundVehicle.color,
                     year: foundVehicle.year,
                     power: foundVehicle.power,
                 };
-                res.status(200).json(foundVehicle);
             }
+            res.status(200).json(responseVehicle);
         }
         else {
             // If the vehicle is not found, send a 404 response
-            res.status(404).send('Vehicle is not found');
+            res.status(404).send('Vehicle not found');
         }
     }
     catch (error) {
-        // Catch Error
-        console.error('Error searching for vehicle: ', error);
+        // Catch error
+        console.error('Error searching for vehicle:', error);
         res.status(500).send('Internal Server Error');
     }
 });
